@@ -1,27 +1,39 @@
-# berlin-transport-data-pipeline
+# Berlin Public Transport Data Integration & Analytics
 
-# Berlin Transport Data Engineering Pipeline
+A data engineering project that builds a PostgreSQL-based analytical warehouse for Berlin public transport data. The project integrates planned timetable data and real-time timetable updates using a modular Python ETL pipeline, enabling large-scale analysis of train movements, delays, cancellations, and station-level patterns.
 
-## Overview
-Built a data engineering pipeline to process large-scale public transport data from Berlin, integrating planned timetables and real-time updates into a PostgreSQL data warehouse.
+## Project Overview
 
-## Architecture
-- Star Schema:
-  - Fact: `fact_train_movement`
-  - Dimensions: `dim_station`, `dim_train`, `dim_time`
-- ETL Pipeline implemented in Python
+This project was developed for the **Data Integration and Large Scale Analysis** course. It focuses on ingesting heterogeneous transport datasets, transforming them into a structured analytical model, and running SQL-based analysis on the integrated data.
+
+The system uses a **star schema** with one fact table and multiple dimension tables:
+
+- **fact_train_movement**: stores train arrival and departure events
+- **dim_station**: station metadata such as name, EVA number, and coordinates
+- **dim_train**: train-related attributes such as operator, category, and line
+- **dim_time**: normalized time dimension for temporal analysis
 
 ## Features
-- Processes 100k+ XML timetable files
-- Handles real-time updates (delays, cancellations)
-- Robust station matching (EVA, name normalization, fallback strategies)
-- Incremental updates for efficiency
+
+- Designed and implemented a **star schema data warehouse**
+- Built a **modular ETL pipeline in Python**
+- Parsed **large-scale XML and JSON datasets**
+- Loaded planned timetable events into PostgreSQL
+- Integrated **real-time timetable changes** including delays and cancellations
+- Applied **data cleaning and normalization** to resolve inconsistent station names
+- Supported analytical SQL queries for:
+  - average delay per station
+  - cancelled train counts at specific snapshots
+  - nearest station by geographic coordinates
+  - station metadata lookup
 
 ## Tech Stack
-- Python (ETL)
-- PostgreSQL
-- SQL
-- XML / JSON parsing
+
+- **Python**
+- **PostgreSQL**
+- **SQL**
+- **XML / JSON**
+- **psycopg2**
 
 ## Example Analysis
 - Average delay per station
@@ -29,8 +41,6 @@ Built a data engineering pipeline to process large-scale public transport data f
 - Nearest station (geo query)
 
 ## How to Run
-```bash
-pip install -r requirements.txt
 python etl/load_stations.py
 python etl/load_time.py
 python etl/load_trains.py
